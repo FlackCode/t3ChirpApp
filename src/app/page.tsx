@@ -5,6 +5,7 @@ import Image from "next/image";
 import { api, type RouterOutputs } from "~/trpc/react";
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { LoadingPage } from "~/components/loading";
 
 dayjs.extend(relativeTime);
 
@@ -26,7 +27,7 @@ const PostView = (props: PostWithUser) => {
   const {post, author} = props;
   return (
     <div key={post.id} className="flex p-4 border-b border-slate-400 gap-3">
-      <Image src={author.imageUrl} alt="Profile Image" className="w-14 h-14 rounded-full" width={56} height={56}/>
+      <Image src={author.imageUrl} alt={`@${author.username}'s profile picture`} className="w-14 h-14 rounded-full" width={56} height={56}/>
       <div className="flex flex-col">
         <div className="flex text-slate-300 gap-1">
           <span>{`@${author.username} `}</span><span className="font-thin">{` · ${dayjs(post.createdAt).fromNow()}`}</span>
@@ -42,7 +43,7 @@ const PostView = (props: PostWithUser) => {
 
 export default function Home() {
   const { data, isLoading } = api.post.getAll.useQuery();
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <LoadingPage />
   if (!data) return <div>Something went wrong...</div>
 
   return (
