@@ -8,6 +8,7 @@ import { filterUserForClient } from "~/server/helpers/filterUserForClient";
 export const profileRouter = createTRPCRouter({
     getUserByUsername: publicProcedure
     .input(z.object({username: z.string()}))
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .query(async ({ctx, input}) => {
         const client = await clerkClient();
         const users = await client.users.getUserList({
