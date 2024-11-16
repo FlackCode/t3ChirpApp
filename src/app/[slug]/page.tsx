@@ -15,7 +15,7 @@ const ProfileFeed = (props: {userId: string}) => {
 
     return <div className="flex flex-col">
         {data.map((fullPost) => (
-              <PostView post={fullPost} author={fullPost.authorId} key={fullPost.id} />
+              <PostView post={fullPost.post} author={fullPost.author} key={fullPost.post.id} />
         ))}
     </div>
 }
@@ -39,8 +39,9 @@ export default function ProfilePage() {
                 <div className="h-48"></div>
                 <div className="p-4 text-2xl font-bold">{`@${data.username}`}</div>
                 <div className="border-b border-slate-400 w-full"></div>
+                <ProfileFeed userId={data.id} />
             </div>
-            <ProfileFeed />
+            
         </div>
     )
 }
