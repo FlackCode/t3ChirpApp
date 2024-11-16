@@ -96,7 +96,7 @@ const PostView = (props: PostWithUser) => {
 export default function Home() {
   const { data, isLoading } = api.post.getAll.useQuery();
   if (isLoading) return <LoadingPage />
-  if (!data) return <div>Something went wrong...</div>
+  if (!data || data.length === 0) return <div>No posts yet...</div>;
 
   return (
         <div>
