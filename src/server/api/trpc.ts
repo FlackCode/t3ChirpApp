@@ -6,9 +6,9 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { clerkClient, currentUser, getAuth } from "@clerk/nextjs/server";
+import { clerkClient, getAuth } from "@clerk/nextjs/server";
 import { initTRPC, TRPCError } from "@trpc/server";
-import { RequestLike } from "node_modules/@clerk/nextjs/dist/types/server/types";
+import { type RequestLike } from "node_modules/@clerk/nextjs/dist/types/server/types";
 import superjson from "superjson";
 import { ZodError } from "zod";
 

@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image"
+import { useParams } from "next/navigation"
 import { LoadingPage } from "~/components/loading"
 import { PostView } from "~/components/PostView"
 import { api } from "~/trpc/react"
@@ -21,7 +22,10 @@ const ProfileFeed = (props: {userId: string}) => {
 }
 
 export default function ProfilePage() {
-    const {data, isLoading} = api.profile.getUserByUsername.useQuery({username: "flackcode"})
+    const params = useParams();
+    const username = Array.isArray(params.slug) ? params.slug[0] : params.slug;
+    if (!username) return <div>404</div>
+    const {data, isLoading} = api.profile.getUserByUsername.useQuery({username: username})
 
     if (isLoading) return <LoadingPage />
 

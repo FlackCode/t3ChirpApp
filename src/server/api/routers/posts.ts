@@ -34,6 +34,18 @@ const ratelimit = new Ratelimit({
 })
 
 export const postsRouter = createTRPCRouter({
+  getById: publicProcedure.input(z.object({postId: z.string()})).query(async ({ctx, input}) => {
+    const post = await ctx.db.post.findUnique({
+      where: {
+        id: input.postId
+      }
+    })
+
+    if (!post) throw new TRPCError({ code: "NOT_FOUND" });
+
+    return (await addUserDataToPosts([post]))[0];
+  }
+  ),
   getAll: publicProcedure.query(async({ ctx }) => {
     const posts = await ctx.db.post.findMany({      
       take: 100,
@@ -50,9 +62,8 @@ export const postsRouter = createTRPCRouter({
     },
     take: 100,
     orderBy: [{ createdAt: "desc" }]
-  }).then(addUserDataToPosts)
-),
-
+    }).then(addUserDataToPosts)
+  ),
   create: privateProcedure.input(z.string().emoji().min(1).max(280)).mutation(async ({ctx, input}) => {
     const authorId = ctx.currentUser.id;
 
