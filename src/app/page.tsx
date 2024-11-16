@@ -99,26 +99,24 @@ export default function Home() {
   if (!data) return <div>Something went wrong...</div>
 
   return (
-    <div className="flex justify-center h-screen">
-      <div className="w-full md:max-w-2xl border-x border-slate-400">
-        <div className="border-b border-slate-400 p-4 flex">
-          <SignedOut>
-            <div className="flex justify-center">
-              <SignInButton />
-            </div>
-          </SignedOut>
-          <SignedIn>
-            <div className="flex justify-center grow">
-              <CreatePostWizard />
-            </div>
-          </SignedIn>
+        <div>
+          <div className="border-b border-slate-400 p-4 flex">
+            <SignedOut>
+              <div className="flex justify-center">
+                <SignInButton />
+              </div>
+            </SignedOut>
+            <SignedIn>
+              <div className="flex justify-center grow">
+                <CreatePostWizard />
+              </div>
+            </SignedIn>
+          </div>
+          <div className="flex flex-col">
+            {data.map((fullPost) => (
+              <PostView {...fullPost} key={fullPost.post.id} />
+            ))}
+          </div>
         </div>
-        <div className="flex flex-col">
-          {data.map((fullPost) => (
-            <PostView {...fullPost} key={fullPost.post.id} />
-          ))}
-        </div>
-      </div>
-    </div>
   );
 }
